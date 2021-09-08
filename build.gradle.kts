@@ -6,7 +6,7 @@ plugins {
 
 group = "org.indilib.i4j"
 description = "INDIForJava-client"
-version = "2.1.0"
+version = "2.1.1"
 
 repositories {
     mavenCentral()
@@ -21,7 +21,7 @@ java {
 }
 
 dependencies {
-    api("com.github.INDIForJava:INDIForJava-driver:2.1.0")
+    api("com.github.INDIForJava:INDIForJava-driver:2.1.1")
 }
 
 tasks.jar {
@@ -79,21 +79,5 @@ publishing {
                 }
             }
         }
-    }
-}
-
-val fatJar = task("fatJar", type = Jar::class) {
-    archiveBaseName.set("${project.name}-fat")
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    manifest {
-        from("META-INF/MANIFEST.MF")
-    }
-    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
-    with(tasks.jar.get() as CopySpec)
-}
-
-tasks {
-    "build" {
-        dependsOn(fatJar)
     }
 }
